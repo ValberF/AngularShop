@@ -1,1 +1,11 @@
-<p>header works!</p>
+<div class="header">
+    <img src="assets/2.png" alt="image-de-porco" routerLink="/" />
+    <nav class="nav-links">
+        <a routerLink="/" routerLinkActive="active">Home</a>
+        <a routerLink="/products" routerLinkActive="active">Produtos</a>
+        <a routerLink="/product-register" routerLinkActive="active">Cadastrar Produto</a>
+        <a routerLink="/cart" routerLinkActive="active">Carrinho</a>
+        <a routerLink="/login" routerLinkActive="active"><i-feather name="user"></i-feather></a>
+        <a (click)="logout()" class="cursor-pointer"><i-feather name="log-out"></i-feather></a>
+    </nav>
+</div>

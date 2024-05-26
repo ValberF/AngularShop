@@ -1,0 +1,75 @@
+<div class="register">
+    <div class="form-container">
+        <h2>Cadastro de produto</h2>
+        <br>
+        <br>
+        <form id="form" (ngSubmit)="addSuino()" [formGroup]="form">
+            <div class="input-group">
+                <label for="name">
+                    Nome do produto
+                    <input id="name" formControlName="name" type="text" />
+                    <span *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
+                        Por favor, insira o nome do produto!
+                    </span>
+                    <span *ngIf="form.get('name')?.errors?.['nameExists'] && form.get('name')?.touched">
+                        O nome do produto já existe!
+                    </span>
+                </label>
+                <label for="code">
+                    Código do produto
+                    <input id="code" formControlName="code" type="number" />
+                    <span *ngIf="!form.get('code')?.valid && form.get('code')?.touched">
+                        Por favor, insira o código do produto!
+                    </span>
+                </label>
+            </div>
+            <div class="input-group">
+                <label for="description">
+                    Descrição do produto
+                    <input id="description" formControlName="description" type="text" />
+                    <span *ngIf="!form.get('description')?.valid && form.get('description')?.touched">
+                        Por favor, insira o Descrição do produto!
+                    </span>
+                </label>
+                <label for="category">
+                    Categoria
+                    <select id="category" formControlName="category">
+                        <option value="Ativo">Proteína</option>
+                        <option value="Vendido">Aminoácido</option>
+                        <option value="Morto">Carboidrato</option>
+                        <option value="Morto">Vitamina</option>
+                        <option value="Morto">Acessório</option>
+                    </select>
+                </label>
+            </div>
+            <div class="input-group">
+                <label for="price">
+                    Preço do produto
+                    <input id="price" formControlName="price" type="number" />
+                    <span *ngIf="!form.get('price')?.valid && form.get('price')?.touched">
+                        Por favor, insira o preço do produto!
+                    </span>
+                </label>
+                <label for="image">
+                    Imagem do produto
+                    <input id="image" formControlName="image" type="text" />
+                    <span *ngIf="!form.get('image')?.valid && form.get('image')?.touched">
+                        Por favor, insira o imagem do produto!
+                    </span>
+                </label>
+            </div>
+            <div class="input-group">
+                <label for="stock">
+                    Quantidade do produto
+                    <input id="stock" formControlName="stock" type="number" />
+                    <span *ngIf="!form.get('stock')?.valid && form.get('stock')?.touched">
+                        Por favor, insira o quantidade do produto!
+                    </span>
+                </label>
+            </div>
+            <div class="button-container">
+                <button type="submit">Registrar</button>
+            </div>
+        </form>
+    </div>
+</div>

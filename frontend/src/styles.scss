@@ -5,7 +5,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Roboto", cursive;
-    background-color: #6664ac;
+
+    body {
+        background-color: #6664ac;
+    }
 
     ::-webkit-scrollbar {
         width: 15px;
