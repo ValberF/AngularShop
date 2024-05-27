@@ -8,13 +8,12 @@ import { passwordValidator } from '../validators/password.validator';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(private authService: AuthService, private router: Router) { }
-
 
   ngOnInit(): void {
     this.form = new FormGroup({
