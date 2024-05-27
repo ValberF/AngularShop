@@ -1,17 +1,22 @@
-// user.model.ts
-export class User {
-    constructor(
-      public email: string,
-      public id: string,
-      private _token: string,
-      private _tokenExpirationDate: Date
-    ) {}
-  
-    get token() {
-      if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
-        return null;
-      }
-      return this._token;
+export interface IUser {
+  email: string;
+  localId: string;
+  token: string;
+  expirationDate: Date;
+}
+
+export class User implements IUser {
+  constructor(
+    public email: string,
+    public localId: string, // Corrigido para localId
+    public token: string,
+    public expirationDate: Date // Corrigido para expirationDate
+  ) {}
+
+  get validToken() {
+    if (!this.expirationDate || new Date() > this.expirationDate) {
+      return null;
     }
+    return this.token;
   }
-  
+}

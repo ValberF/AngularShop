@@ -1,11 +1,16 @@
-// login.component.ts
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { emailLoginValidator } from '../../validators/email-login.validator';
 import { passwordValidator } from '../../validators/password.validator';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +19,11 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent{
+export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
+    //private authService: AuthService,
     private router: Router
   ) {}
 
@@ -29,10 +35,32 @@ export class LoginComponent{
   }
 
   login() {
-    
+    /*if (this.form.invalid) {
+      return;
+    }
+    this.authService.loginUser(this.form.value.user, this.form.value.password).subscribe({
+      next: () => {
+        alert('Login bem-sucedido!');
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        alert('Falha no login!');
+      }
+    });*/
   }
 
   register() {
-    
+    /*if (this.form.invalid) {
+      return;
+    }
+    this.authService.signupUser(this.form.value.user, this.form.value.password).subscribe({
+      next: () => {
+        alert('Cadastro bem-sucedido!');
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        alert('Falha no cadastro!');
+      }
+    });*/
   }
 }
