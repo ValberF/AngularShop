@@ -1,3 +1,4 @@
+// login.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
@@ -7,43 +8,43 @@ import { passwordValidator } from '../validators/password.validator';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      'user': new FormControl(null, [Validators.required, emailLoginValidator()]),
-      'password': new FormControl(null, [Validators.required, passwordValidator()]),
+      user: new FormControl(null, [Validators.required, emailLoginValidator()]),
+      password: new FormControl(null, [Validators.required, passwordValidator()]),
     });
   }
 
   login() {
     this.authService.loginUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
-        alert("Logando...");
+        alert('Logando...');
         this.router.navigate(['/']);
       },
       error: () => {
-        alert("E-mail ou senha inválidos!");
-      }
+        alert('E-mail ou senha inválidos!');
+      },
     });
   }
 
   register() {
     this.authService.signupUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
-        alert("Usuário cadastrado!");
+        alert('Usuário cadastrado!');
         this.router.navigate(['/']);
       },
       error: () => {
-        alert("E-mail ou senha inválidos para cadastrar!");
-      }
+        alert('E-mail ou senha inválidos para cadastrar!');
+      },
     });
   }
 }
