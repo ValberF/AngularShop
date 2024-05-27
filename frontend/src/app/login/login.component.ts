@@ -1,16 +1,18 @@
 // login.component.ts
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { emailLoginValidator } from '../validators/email-login.validator';
 import { passwordValidator } from '../validators/password.validator';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: true,
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
