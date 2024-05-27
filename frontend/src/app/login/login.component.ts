@@ -8,12 +8,13 @@ import { passwordValidator } from '../validators/password.validator';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']  // Corrigir aqui
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(private authService: AuthService, private router: Router) { }
+
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -25,11 +26,11 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.loginUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
-        alert("Logando...");
+        alert("Logando...")
         this.router.navigate(['/']);
       },
       error: () => {
-        alert("E-mail ou senha inválidos!");
+        alert("E-mail ou senha inválidos!")
       }
     });
   }
@@ -37,11 +38,11 @@ export class LoginComponent implements OnInit {
   register() {
     this.authService.signupUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
-        alert("Usuário cadastrado!");
+        alert("Usuário cadastrado!")
         this.router.navigate(['/']);
       },
       error: () => {
-        alert("E-mail ou senha inválidos para cadastrar!");
+        alert("E-mail ou senha inválidos para cadastrar!")
       }
     });
   }
