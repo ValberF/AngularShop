@@ -3,7 +3,7 @@
         <h2>Cadastro de produto</h2>
         <br>
         <br>
-        <form id="form" (ngSubmit)="addSuino()" [formGroup]="form">
+        <form id="form" (ngSubmit)="addProduct()" [formGroup]="form">
             <div class="input-group">
                 <label for="name">
                     Nome do produto
@@ -34,11 +34,11 @@
                 <label for="category">
                     Categoria
                     <select id="category" formControlName="category">
-                        <option value="Ativo">Proteína</option>
-                        <option value="Vendido">Aminoácido</option>
-                        <option value="Morto">Carboidrato</option>
-                        <option value="Morto">Vitamina</option>
-                        <option value="Morto">Acessório</option>
+                        <option value="Proteína">Proteína</option>
+                        <option value="Aminoácido">Aminoácido</option>
+                        <option value="Carboidrato">Carboidrato</option>
+                        <option value="Vitamina">Vitamina</option>
+                        <option value="Acessório">Acessório</option>
                     </select>
                 </label>
             </div>

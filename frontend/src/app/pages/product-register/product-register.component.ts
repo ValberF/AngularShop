@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { IProduct } from '../../models/product.model';
+import { codeValidator, nameValidator } from '../../validators/products.validator';
 
 @Component({
   selector: 'app-product-register',
@@ -29,8 +30,8 @@ export class ProductRegisterComponent {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      code: ['', Validators.required],
+      name: ['', Validators.required, nameValidator(this.productService)],
+      code: ['', Validators.required, codeValidator(this.productService)],
       description: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', [Validators.required]],
@@ -39,7 +40,7 @@ export class ProductRegisterComponent {
     });
   }
 
-  addSuino(): void {
+  addProduct(): void {
     if (this.form.valid) {
       const product: IProduct = this.form.value;
 

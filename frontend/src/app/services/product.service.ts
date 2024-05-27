@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Database, ref, set, push, child, get } from '@angular/fire/database';
 import { IProduct } from '../models/product.model';
+import { Observable, from, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +19,13 @@ export class ProductService {
 
   async getProducts(): Promise<IProduct[]> {
     const productRef = ref(this.db, this.dbPath);
-    const snapshot = await get(child(productRef, ''));
+    const snapshot = await get(productRef);
     if (snapshot.exists()) {
-      return Object.values(snapshot.val()) as IProduct[];
+      const products: any = [];
+      snapshot.forEach((childSnapshot) => {
+        products.push({ key: childSnapshot.key, ...childSnapshot.val() });
+      });
+      return products;
     } else {
       return [];
     }
@@ -45,4 +50,16 @@ export class ProductService {
     const productRef = ref(this.db, `${this.dbPath}/${id}`);
     return set(productRef, null);
   }
+  checkCodeExists(code: number): Observable<boolean> {
+    return from(this.getProducts()).pipe(
+      map(products => products.some(product => product.code === code))
+    );
+  }
+
+  checkNameExists(name: string): Observable<boolean> {
+    return from(this.getProducts()).pipe(
+      map(products => products.some(product => product.name === name))
+    );
+  }
+
 }
