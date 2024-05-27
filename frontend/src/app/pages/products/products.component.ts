@@ -53,10 +53,11 @@ export class ProductsComponent implements OnInit {
 
   async comprarProduto(product: IProduct): Promise<void> {
     if (product.stock > 0) {
+      console.log(product);
       this.cartService.addToCart(product);
       product.stock -= 1;
       try {
-        await this.productService.updateProduct(product.id!, product);
+        await this.productService.updateProduct(product.key!, product);
         alert(`${product.name} foi adicionado ao carrinho!`);
       } catch (error) {
         console.error('Erro ao atualizar o produto: ', error);
