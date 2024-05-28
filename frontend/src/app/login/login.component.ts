@@ -48,8 +48,10 @@ export class LoginComponent implements OnInit {
 
   async register() {
     const { user, password } = this.form.value;
+    // Por padrão, vamos registrar novos usuários como 'user'
+    const role = 'user';
     try {
-      await this.authService.signupUser(user, password);
+      await this.authService.signupUser(user, password, role);
       alert('Usuário cadastrado!');
       this.router.navigate(['/']);
     } catch (error) {

@@ -3,7 +3,8 @@ export class IUser {
     public email: string,
     public id: string,
     private _token: string,
-    private _tokenExpirationDate: Date
+    private _tokenExpirationDate: Date,
+    public role: 'user' | 'admin' // Adicionando a role
   ) {}
 
   get token() {

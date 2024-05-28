@@ -16,7 +16,7 @@ export class AuthService {
     private router: Router
   ) { }
 
-  signupUser(email: string, password: string) {
+  signupUser(email: string, password: string, role: 'user' | 'admin') {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
@@ -27,7 +27,8 @@ export class AuthService {
               user.email || '',
               user.uid,
               tokenResult.token,
-              expirationDate
+              expirationDate,
+              role
             );
             this.usuario.next(usuario);
             localStorage.setItem('userData', JSON.stringify(usuario));
@@ -40,20 +41,21 @@ export class AuthService {
 
   loginUser(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential: UserCredential) => {
+      .then(async (userCredential: UserCredential) => {
         const user = userCredential.user;
         if (user) {
-          return user.getIdTokenResult().then(tokenResult => {
-            const expirationDate = new Date(tokenResult.expirationTime);
-            const usuario = new IUser(
-              user.email || '',
-              user.uid,
-              tokenResult.token,
-              expirationDate
-            );
-            this.usuario.next(usuario);
-            localStorage.setItem('userData', JSON.stringify(usuario));
-          });
+          const tokenResult = await user.getIdTokenResult();
+          const expirationDate = new Date(tokenResult.expirationTime);
+          const role = tokenResult.claims['role'] as 'user' | 'admin' || 'user';
+          const usuario = new IUser(
+            user.email || '',
+            user.uid,
+            tokenResult.token,
+            expirationDate,
+            role
+          );
+          this.usuario.next(usuario);
+          localStorage.setItem('userData', JSON.stringify(usuario));
         } else {
           return Promise.reject(new Error('Login failed'));
         }
@@ -67,4 +69,6 @@ export class AuthService {
       this.router.navigate(['/login']);
     });
   }
+
+  
 }
