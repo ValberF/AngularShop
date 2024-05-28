@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.loginUser(this.form.value.user, this.form.value.password).subscribe({
+    /*this.authService.loginUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
         alert("Logando...")
         this.router.navigate(['/']);
@@ -43,11 +43,11 @@ export class LoginComponent implements OnInit {
       error: () => {
         alert("E-mail ou senha inválidos!")
       }
-    });
+    });*/
   }
 
   register() {
-    this.authService.signupUser(this.form.value.user, this.form.value.password).subscribe({
+    /*this.authService.signupUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
         alert("Usuário cadastrado!")
         this.router.navigate(['/']);
@@ -55,6 +55,6 @@ export class LoginComponent implements OnInit {
       error: () => {
         alert("E-mail ou senha inválidos para cadastrar!")
       }
-    });
+    });*/
   }
 }

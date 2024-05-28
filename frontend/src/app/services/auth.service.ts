@@ -19,10 +19,10 @@ export class AuthService {
 
   usuario = new BehaviorSubject<IUser>(new IUser('', '', '', new Date()));
 
-  constructor(private http: HttpClient) { }
+  /*constructor(private http: HttpClient) { }*/
 
   signupUser(email: string, password: string) {
-    return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyApFVO_S6uB6iIaeojmNDRbF9Gl2oXZV4w',
+    /*return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyApFVO_S6uB6iIaeojmNDRbF9Gl2oXZV4w',
     {
        email: email,
        password: password,
@@ -40,11 +40,11 @@ export class AuthService {
          this.usuario.next(usuario);
          localStorage.setItem('userData', JSON.stringify(usuario));
        })
-    );
+    );*/
    }
 
    loginUser(email: string, password: string) {
-     return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApFVO_S6uB6iIaeojmNDRbF9Gl2oXZV4w',
+     /*return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApFVO_S6uB6iIaeojmNDRbF9Gl2oXZV4w',
      {
        email: email,
        password: password,
@@ -61,7 +61,7 @@ export class AuthService {
          this.usuario.next(usuario);
          localStorage.setItem('userData', JSON.stringify(usuario));
      }),
-    );
+    );*/
    }
 
    logout() {
