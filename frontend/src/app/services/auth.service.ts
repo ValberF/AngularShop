@@ -43,7 +43,6 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password)
       .then(async (userCredential: UserCredential) => {
         const user = userCredential.user;
-        console.log(user);
         if (user) {
           const tokenResult = await user.getIdTokenResult();
           const expirationDate = new Date(tokenResult.expirationTime);

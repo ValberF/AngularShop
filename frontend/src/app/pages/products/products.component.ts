@@ -53,7 +53,6 @@ export class ProductsComponent implements OnInit {
 
   async comprarProduto(product: IProduct): Promise<void> {
     if (product.stock > 0) {
-      console.log(product);
       this.cartService.addToCart(product);
       product.stock -= 1;
       try {

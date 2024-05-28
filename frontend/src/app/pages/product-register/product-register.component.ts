@@ -47,7 +47,6 @@ export class ProductRegisterComponent {
       this.productService
         .createProduct(product)
         .then(() => {
-          console.log('Produto salvo com sucesso!');
           this.router.navigate(['/products']);
         })
         .catch((error) => {
