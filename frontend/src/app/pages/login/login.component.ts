@@ -23,44 +23,38 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
-    //private authService: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      user: new FormControl(null, [Validators.required, emailLoginValidator()]),
-      password: new FormControl(null, [Validators.required, passwordValidator()]),
+      'user': new FormControl(null, [Validators.required, emailLoginValidator()]),
+      'password': new FormControl(null, [Validators.required, passwordValidator()]),
     });
   }
 
   login() {
-    /*if (this.form.invalid) {
-      return;
-    }
     this.authService.loginUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
-        alert('Login bem-sucedido!');
+        alert("Logando...")
         this.router.navigate(['/']);
       },
       error: () => {
-        alert('Falha no login!');
+        alert("E-mail ou senha inválidos!")
       }
-    });*/
+    });
   }
 
   register() {
-    /*if (this.form.invalid) {
-      return;
-    }
     this.authService.signupUser(this.form.value.user, this.form.value.password).subscribe({
       next: () => {
-        alert('Cadastro bem-sucedido!');
+        alert("Usuário cadastrado!")
         this.router.navigate(['/']);
       },
       error: () => {
-        alert('Falha no cadastro!');
+        alert("E-mail ou senha inválidos para cadastrar!")
       }
-    });*/
+    });
   }
 }
