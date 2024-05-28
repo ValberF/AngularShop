@@ -1,70 +1,70 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { IUser } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
-
-interface AuthResponseData {
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-  localId: string;
-  registered?: boolean;
-}
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, UserCredential } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  usuario = new BehaviorSubject<IUser>(new IUser('', '', '', new Date()));
+  usuario = new BehaviorSubject<IUser | null>(null);
 
-  /*constructor(private http: HttpClient) { }*/
+  constructor(
+    private auth: Auth,
+    private router: Router
+  ) { }
 
   signupUser(email: string, password: string) {
-    /*return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyApFVO_S6uB6iIaeojmNDRbF9Gl2oXZV4w',
-    {
-       email: email,
-       password: password,
-       returnSecureToken: true
-    }).pipe(
-       tap(resData => {
-         const expiracaoData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-         const usuario = new IUser(
-           resData.email,
-           resData.localId,
-           resData.idToken,
-           expiracaoData
-         );
+    return createUserWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential: UserCredential) => {
+        const user = userCredential.user;
+        if (user) {
+          return user.getIdTokenResult().then(tokenResult => {
+            const expirationDate = new Date(tokenResult.expirationTime);
+            const usuario = new IUser(
+              user.email || '',
+              user.uid,
+              tokenResult.token,
+              expirationDate
+            );
+            this.usuario.next(usuario);
+            localStorage.setItem('userData', JSON.stringify(usuario));
+          });
+        } else {
+          return Promise.reject(new Error('User creation failed'));
+        }
+      });
+  }
 
-         this.usuario.next(usuario);
-         localStorage.setItem('userData', JSON.stringify(usuario));
-       })
-    );*/
-   }
+  loginUser(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential: UserCredential) => {
+        const user = userCredential.user;
+        if (user) {
+          return user.getIdTokenResult().then(tokenResult => {
+            const expirationDate = new Date(tokenResult.expirationTime);
+            const usuario = new IUser(
+              user.email || '',
+              user.uid,
+              tokenResult.token,
+              expirationDate
+            );
+            this.usuario.next(usuario);
+            localStorage.setItem('userData', JSON.stringify(usuario));
+          });
+        } else {
+          return Promise.reject(new Error('Login failed'));
+        }
+      });
+  }
 
-   loginUser(email: string, password: string) {
-     /*return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApFVO_S6uB6iIaeojmNDRbF9Gl2oXZV4w',
-     {
-       email: email,
-       password: password,
-       returnSecureToken: true
-    }).pipe(
-     tap(resData => {
-       const expiracaoData = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-         const usuario = new IUser(
-           resData.email,
-           resData.localId,
-           resData.idToken,
-           expiracaoData
-         );
-         this.usuario.next(usuario);
-         localStorage.setItem('userData', JSON.stringify(usuario));
-     }),
-    );*/
-   }
-
-   logout() {
-    this.usuario.next(new IUser('', '', '', new Date()));
+  logout() {
+    return signOut(this.auth).then(() => {
+      this.usuario.next(null);
+      localStorage.removeItem('userData');
+      this.router.navigate(['/login']);
+    });
   }
 }
