@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent implements OnInit {
   cart: ICartProduct[] = [];
+  cartFinished!: {};
+  user: any;
 
   constructor(private cartService: CartService) { }
 
@@ -22,12 +24,23 @@ export class CartComponent implements OnInit {
   }
 
   finalizarPedido(): void {
-    if (this.cart.length > 0) {
+    if (this.cart.length > 0 || localStorage.getItem("userData")) {
+      const userDataString = localStorage.getItem("userData");
+      if (userDataString !== null) {
+        this.user = JSON.parse(userDataString);
+      } else {
+        this.user = null;
+      }
+      this.cartFinished = {
+        cart: this.cart,
+        user: this.user
+      }
       alert('Pedido finalizado com sucesso!');
+      console.log(this.cartFinished);
       this.cartService.clearCart();
       this.cart = [];
     } else {
-      alert('O carrinho está vazio!');
+      alert('O carrinho está vazio ou não existe usuário logado!');
     }
   }
 

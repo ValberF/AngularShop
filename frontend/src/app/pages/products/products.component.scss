@@ -1,3 +1,18 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  min-height: 80vh;
+
+  padding: 70px 60px;
+
+  img {
+    border-radius: 12px;
+  }
+}
+
+
 $primary-color: #00ffcc;
 $secondary-color: #1e1e1e;
 $font-stack: "Roboto", sans-serif;
@@ -72,23 +87,6 @@ select {
         color: $primary-color;
       }
     }
-
-    //   .comprar-btn {
-    //     background: $primary-color;
-    //     border: none;
-    //     border-radius: 25px;
-    //     color: #fff;
-    //     cursor: pointer;
-    //     font-family: $font-stack;
-    //     font-size: 1em;
-    //     padding: 10px 20px;
-    //     transition: background 0.3s;
-
-    //     &:hover {
-    //       background: darken($primary-color, 10%);
-    //     }
-    //   }
-    // }
 
     .confirmation-message {
       position: fixed;

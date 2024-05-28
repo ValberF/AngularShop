@@ -14,13 +14,11 @@ export class CartService {
 
   addToCart(product: IProduct) {
     const cartProduct = this.cart.find(p => p.key === product.key);
-    //console.log(cartProduct);
     if (cartProduct) {
       cartProduct.quantity += 1;
     } else {
       this.cart.push({ ...product, quantity: 1 });
     }
-    console.log(`${product.name} foi adicionado ao carrinho.`);
   }
 
   getCart(): ICartProduct[] {

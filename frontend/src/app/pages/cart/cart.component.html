@@ -1,7 +1,8 @@
-<div *ngIf="cart.length === 0">
+<div class="cart">
+  <div *ngIf="cart.length === 0">
     <p>O carrinho está vazio.</p>
   </div>
-  
+
   <div *ngIf="cart.length > 0">
     <h2>Produtos no Carrinho</h2>
     <div *ngFor="let product of cart" class="cart-item">
@@ -16,4 +17,4 @@
     </div>
     <button (click)="finalizarPedido()" class="finalizar-btn">Finalizar Pedido</button>
   </div>
-  
+</div>
