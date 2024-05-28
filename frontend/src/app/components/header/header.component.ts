@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IconsModule } from '../../icons/icons.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,10 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
 
+  constructor(private authService: AuthService) {}
+
   logout() {
+    this.authService.logout();
     alert("Deslogando...")
   }
 }
