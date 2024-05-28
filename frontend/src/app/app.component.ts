@@ -8,7 +8,7 @@ import { ContentComponent } from './components/content/content.component';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, ContentComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'frontend';
