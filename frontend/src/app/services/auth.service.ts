@@ -43,10 +43,14 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password)
       .then(async (userCredential: UserCredential) => {
         const user = userCredential.user;
+        console.log(user);
         if (user) {
           const tokenResult = await user.getIdTokenResult();
           const expirationDate = new Date(tokenResult.expirationTime);
-          const role = tokenResult.claims['role'] as 'user' | 'admin' || 'user';
+          let role = 'user';
+          if(user.email == "admin@email.com") {
+            role = 'admin';
+          }
           const usuario = new IUser(
             user.email || '',
             user.uid,
