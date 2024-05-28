@@ -13,9 +13,10 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.authService.usuario.pipe(
       map(user => {
-        if (user && user.role === 'user') {
+        if (user && user.role === 'admin') {
           return true;
         } else {
+          alert("Autorizado apenas para admin!");
           this.router.navigate(['/login']);
           return false;
         }
