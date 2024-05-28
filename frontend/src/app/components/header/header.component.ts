@@ -3,6 +3,7 @@ import { IconsModule } from '../../icons/icons.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +14,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HeaderComponent {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private cartService: CartService) {}
 
   logout() {
     this.authService.logout();
     alert("Deslogando...")
   }
+
 }
