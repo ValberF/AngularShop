@@ -57,7 +57,6 @@ export class ProductsComponent implements OnInit {
       product.stock -= 1;
       try {
         await this.productService.updateProduct(product.key!, product);
-        alert(`${product.name} foi adicionado ao carrinho!`);
       } catch (error) {
         console.error('Erro ao atualizar o produto: ', error);
       }
@@ -66,21 +65,4 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  showConfirmationMessage(message: string) {
-    const confirmationMessage = document.createElement('div');
-    confirmationMessage.className = 'confirmation-message';
-    confirmationMessage.innerText = message;
-    document.body.appendChild(confirmationMessage);
-
-    setTimeout(() => {
-      confirmationMessage.classList.add('show');
-    }, 10);
-
-    setTimeout(() => {
-      confirmationMessage.classList.remove('show');
-      setTimeout(() => {
-        document.body.removeChild(confirmationMessage);
-      }, 300);
-    }, 3000);
-  }
 }

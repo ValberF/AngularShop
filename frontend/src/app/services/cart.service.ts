@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../models/product.model';
+import { ICart } from '../models/cart.model';
+import { Database, get, push, ref, set } from '@angular/fire/database';
 
 
 export interface ICartProduct extends IProduct {
@@ -11,6 +13,9 @@ export interface ICartProduct extends IProduct {
 
 export class CartService {
   private cart: ICartProduct[] = [];
+  private dbCartsPath = '/carts';
+
+  constructor(private db: Database) {}
 
   addToCart(product: IProduct) {
     const cartProduct = this.cart.find(p => p.key === product.key);
@@ -18,6 +23,29 @@ export class CartService {
       cartProduct.quantity += 1;
     } else {
       this.cart.push({ ...product, quantity: 1 });
+    }
+  }
+
+  async createCart(cart: any): Promise<void> {
+    const cartRef = ref(this.db, this.dbCartsPath);
+    const newCartRef = push(cartRef);
+    return set(newCartRef, cart);
+  }
+
+  async getCartsByUser(userId: string): Promise<ICart[]> {
+    const cartRef = ref(this.db, this.dbCartsPath);
+    const snapshot = await get(cartRef);
+    if (snapshot.exists()) {
+      const carts: any = [];
+      snapshot.forEach((childSnapshot) => {
+        const cart = childSnapshot.val() as ICart;
+        if (cart.user && cart.user.id === userId) {
+          carts.push({ key: childSnapshot.key, ...cart });
+        }
+      });
+      return carts;
+    } else {
+      return [];
     }
   }
 
