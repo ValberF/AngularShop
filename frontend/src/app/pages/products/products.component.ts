@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
@@ -13,8 +13,8 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  products: IProduct[] = [];
-  filteredProducts: IProduct[] = [];
+  products: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
+  filteredProducts: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
   selectedCategory: string = 'Todos';
 
   constructor(
@@ -28,7 +28,8 @@ export class ProductsComponent implements OnInit {
 
   async loadProducts(): Promise<void> {
     try {
-      this.products = await this.productService.getProducts();
+      const products = await this.productService.getProducts();
+      this.products.set(products);
       this.applyFilter();
     } catch (error) {
       console.error('Erro ao buscar os produtos: ', error);
@@ -36,13 +37,13 @@ export class ProductsComponent implements OnInit {
   }
 
   applyFilter(): void {
+    const products = this.products();
     if (this.selectedCategory === 'Todos') {
-      this.filteredProducts = this.products;
+      this.filteredProducts.set(products);
     } else {
-      this.filteredProducts = this.products.filter(
-        (product) => product.category === this.selectedCategory
+      this.filteredProducts.set(
+        products.filter((product) => product.category === this.selectedCategory)
       );
-      this.products.filter((product) => console.log(product.category));
     }
   }
 
@@ -56,6 +57,9 @@ export class ProductsComponent implements OnInit {
       console.log(product);
       this.cartService.addToCart(product);
       product.stock -= 1;
+      this.products.update(products =>
+        products.map(p => (p.key === product.key ? product : p))
+      );
       try {
         await this.productService.updateProduct(product.key!, product);
         alert(`${product.name} foi adicionado ao carrinho!`);
@@ -65,6 +69,10 @@ export class ProductsComponent implements OnInit {
     } else {
       alert('Produto fora de estoque!');
     }
+  }
+
+  get filteredProductsList(): IProduct[] {
+    return this.filteredProducts();
   }
 
   showConfirmationMessage(message: string) {
