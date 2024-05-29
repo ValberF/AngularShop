@@ -6,6 +6,7 @@ import {
   FileMinus,
   TrendingUp,
   User,
+  ShoppingCart,
   LogOut
 } from 'angular-feather/icons';
 import { FeatherModule } from 'angular-feather';
@@ -16,6 +17,7 @@ const icons = {
   FileMinus,
   TrendingUp,
   User,
+  ShoppingCart,
   LogOut
 };
 
