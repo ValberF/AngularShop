@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
@@ -13,8 +13,8 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  products: IProduct[] = [];
-  filteredProducts: IProduct[] = [];
+  products: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
+  filteredProducts: WritableSignal<IProduct[]> = signal<IProduct[]>([]);
   selectedCategory: string = 'Todos';
 
   constructor(
@@ -28,7 +28,8 @@ export class ProductsComponent implements OnInit {
 
   async loadProducts(): Promise<void> {
     try {
-      this.products = await this.productService.getProducts();
+      const products = await this.productService.getProducts();
+      this.products.set(products);
       this.applyFilter();
     } catch (error) {
       console.error('Erro ao buscar os produtos: ', error);
@@ -37,12 +38,12 @@ export class ProductsComponent implements OnInit {
 
   applyFilter(): void {
     if (this.selectedCategory === 'Todos') {
-      this.filteredProducts = this.products;
+      this.filteredProducts.set(this.products());
     } else {
-      this.filteredProducts = this.products.filter(
+      const filtered = this.products().filter(
         (product) => product.category === this.selectedCategory
       );
-      this.products.filter((product) => console.log(product.category));
+      this.filteredProducts.set(filtered);
     }
   }
 
@@ -57,6 +58,7 @@ export class ProductsComponent implements OnInit {
       product.stock -= 1;
       try {
         await this.productService.updateProduct(product.key!, product);
+        this.applyFilter(); // Reaplicar filtro após a atualização do estoque
       } catch (error) {
         console.error('Erro ao atualizar o produto: ', error);
       }
@@ -65,4 +67,25 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  get filteredProductsList(): IProduct[] {
+    return this.filteredProducts();
+  }
+
+  showConfirmationMessage(message: string) {
+    const confirmationMessage = document.createElement('div');
+    confirmationMessage.className = 'confirmation-message';
+    confirmationMessage.innerText = message;
+    document.body.appendChild(confirmationMessage);
+
+    setTimeout(() => {
+      confirmationMessage.classList.add('show');
+    }, 10);
+
+    setTimeout(() => {
+      confirmationMessage.classList.remove('show');
+      setTimeout(() => {
+        document.body.removeChild(confirmationMessage);
+      }, 300);
+    }, 3000);
+  }
 }
