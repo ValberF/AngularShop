@@ -1,0 +1,12 @@
+<div class="header">
+    <img src="assets/2.png" alt="image-de-porco" routerLink="/" />
+    <nav class="nav-links">
+        <a routerLink="/" routerLinkActive="active">Home</a>
+        <a routerLink="/products" routerLinkActive="active">Produtos</a>
+        <a routerLink="/product-register" routerLinkActive="active">Cadastrar Produto</a>
+        <a (click)="orders()" routerLinkActive="active">Pedidos</a>
+        <a routerLink="/cart" routerLinkActive="active"> <i-feather name="shopping-cart"></i-feather></a>
+        <a routerLink="/login" routerLinkActive="active"><i-feather name="user"></i-feather></a>
+        <a (click)="logout()" class="cursor-pointer"><i-feather name="log-out"></i-feather></a>
+    </nav>
+</div>

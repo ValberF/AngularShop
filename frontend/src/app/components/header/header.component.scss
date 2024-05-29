@@ -1,0 +1,28 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px 35px;
+
+    img {
+        width: 200px;
+        height: 150px;
+        cursor: pointer;
+    }
+
+    nav {
+        display: flex;
+        gap: 25px;
+
+        a,
+        p {
+            text-decoration: inherit;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+            font-size: 26px;
+        }
+    }
+
+}

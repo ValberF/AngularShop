@@ -1,0 +1,32 @@
+<div class="products">
+  <div class="filter-container">
+    <label for="category">Filtrar por Categoria:</label>
+    <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange(selectedCategory)">
+      <option value="Todos">Todos</option>
+      <option value="Proteína">Proteína</option>
+      <option value="Aminoácido">Aminoácido</option>
+      <option value="Carboidrato">Carboidrato</option>
+      <option value="Vitamina">Vitamina</option>
+      <option value="Acessório">Acessório</option>
+    </select>
+  </div>
+
+  <div *ngIf="filteredProducts.length === 0">
+    <p>Nenhum produto encontrado.</p>
+  </div>
+
+  <div *ngIf="filteredProducts.length > 0" class="product-grid">
+    <div class="product-card" *ngFor="let product of filteredProducts">
+      <img [src]="product.image" alt="{{ product.name }}" class="product-image" />
+      <div class="product-details">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p><strong>Preço:</strong> {{ product.price | currency : "BRL" }}</p>
+        <p><strong>Estoque:</strong> {{ product.stock }}</p>
+        <button (click)="comprarProduto(product)" class="comprar-btn">
+          Comprar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

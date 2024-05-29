@@ -1,0 +1,27 @@
+<div class="login">
+  <div class="form-container">
+    <h1>Login</h1>
+    <form id="form" (ngSubmit)="login()" [formGroup]="form">
+      <!-- Campo de Usuário -->
+      <label for="user">
+        Usuário
+        <input id="user" formControlName="user" type="text" />
+        <span *ngIf="!form.get('user')?.valid && form.get('user')?.touched">
+          Usuário inválido!
+        </span>
+      </label>
+      <!-- Campo de Senha -->
+      <label for="password">
+        Senha
+        <input id="password" formControlName="password" type="password" />
+        <span *ngIf="!form.get('password')?.valid && form.get('password')?.touched">
+          Senha precisa ter no mínimo 4 caracteres!
+        </span>
+      </label>
+      <!-- Botão de Login -->
+      <button type="submit" [disabled]="form.invalid">Logar</button>
+      <!-- Botão de Registro -->
+      <button (click)="register()" type="button">Cadastrar</button>
+    </form>
+  </div>
+</div>

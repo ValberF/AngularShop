@@ -1,0 +1,11 @@
+<div class="orders">
+    <div *ngIf="orders.length === 0">
+        <p>Usuário sem pedidos!</p>
+    </div>
+    <div *ngFor="let order of orders" class="order">
+        <div *ngFor="let item of order.cart" class="item">
+            <img [src]="item.image" alt="">
+            <p>{{ item.name }} x{{ item.quantity }}</p>
+        </div>
+    </div>
+</div>
