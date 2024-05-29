@@ -19,6 +19,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.getCartsByUser(this.route.snapshot.paramMap.get('id')!).then(carts => {
       this.orders = carts;
+      console.log(this.orders)
     }).catch(error => {
       console.error("Error fetching carts: ", error);
     });
