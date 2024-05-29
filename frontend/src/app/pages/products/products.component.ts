@@ -58,7 +58,7 @@ export class ProductsComponent implements OnInit {
       product.stock -= 1;
       try {
         await this.productService.updateProduct(product.key!, product);
-        this.applyFilter();  // Reaplicar filtro após a atualização do estoque
+        this.applyFilter(); // Reaplicar filtro após a atualização do estoque
       } catch (error) {
         console.error('Erro ao atualizar o produto: ', error);
       }
