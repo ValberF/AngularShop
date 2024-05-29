@@ -9,6 +9,7 @@
 
   img {
     border-radius: 12px;
+    height: 40%;
   }
 }
 
@@ -50,6 +51,11 @@ select {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
   background: $secondary-color;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
